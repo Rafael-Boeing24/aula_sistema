@@ -20,6 +20,7 @@ try {
             <td>ID</td>
             <td>Sigla</td>
             <td>Nome</td>
+            <td>Ação</td>
         </tr>
         <?php
         if (count($result)) {
@@ -29,6 +30,10 @@ try {
                     <td><?= $row['id'] ?></td>
                     <td><?= $row['sigla'] ?></td>
                     <td><?= $row['nome'] ?></td>
+                    <td>
+                        <a href="?modulo=estados&pagina=alterar&id=<?= $row['id'] ?>">Alterar</a>
+                        <a href="?modulo=estados&pagina=deletar&id=<?= $row['id'] ?>">Excluír</a>
+                    </td>
                 </tr>
                 <?php
             }
