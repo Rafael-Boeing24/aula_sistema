@@ -1,11 +1,11 @@
 <?php
-if (isset($_POST['gravar'])) {
+if (filter_input(INPUT_POST, 'gravar')) {
     try {
         $stmt = $conn->prepare(
                 'INSERT INTO pessoas (nome) values (:nome)');
-        //$stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute(array('nome' => $_POST['nome']));
-        //$stmt->execute();
+        if ($stmt->execute(array('nome' => filter_input(INPUT_POST, 'nome')))) {
+            include CADASTROS . 'pessoas/listagem.php';
+        }
     } catch (PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();
     }

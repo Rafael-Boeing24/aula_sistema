@@ -1,26 +1,23 @@
 <?php
-if (isset($_POST['alterar'])) {
+if (filter_input(INPUT_POST, 'alterar')) {
     try {
-        $stmt = $conn->prepare(
-                'UPDATE pessoas SET nome = :nome WHERE id = :id');
-        //$stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute(array('nome' => $_POST['nome'],
-            'id' => $_GET['id']));
-        //$stmt->execute();
+        $stmt = $conn->prepare('UPDATE pessoas SET nome = :nome WHERE id = :id');
+        if ($stmt->execute(array('nome' => filter_input(INPUT_POST, 'nome'), 'id' => filter_input(INPUT_GET, 'id')))) {
+            unset($_GET['id']);
+            include CADASTROS . 'pessoas/listagem.php';
+            exit();
+        }
     } catch (PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();
     }
 }
 
-if (isset($_GET['id'])) {
+if ($iIdPessoa = filter_input(INPUT_GET, 'id')) {
     $stmt = $conn->prepare('SELECT * FROM pessoas WHERE id = :id');
-    $stmt->bindParam(':id', $_GET['id'], PDO::PARAM_INT);
+    $stmt->bindParam(':id', $iIdPessoa, PDO::PARAM_INT);
 }
-//$stmt->execute(array('id' => $id));
 $stmt->execute();
 $r = $stmt->fetchAll();
-
-//print_r($r);
 ?>
 <form method="post">
     <input type="text" name="nome" value="<?= $r[0]['nome'] ?>">

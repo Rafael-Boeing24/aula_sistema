@@ -1,5 +1,9 @@
 <?php
 
+// Geral
+define('ENTER', '
+');
+
 // Configurações para os diretórios do sitema.
 define('ROOT_DIR', dirname(__DIR__));
 define('BIBLIOTECAS', dirname(__DIR__) . "/bibliotecas/");

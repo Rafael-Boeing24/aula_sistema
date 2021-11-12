@@ -1,9 +1,8 @@
 <?php
-if (isset($_GET['id']))
-    $id = $_GET['id'];
+$id = filter_input(INPUT_GET, 'id');
 
 try {
-    if (isset($id)) {
+    if ($id !== false) {
         $stmt = $conn->prepare('SELECT * FROM pessoas WHERE id = :id');
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     } else {
