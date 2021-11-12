@@ -1,13 +1,14 @@
 <?php
 
 try {
-    $stmt = $conn->prepare('SELECT id,' . ENTER .
+    $stmt = $conn->prepare('select id,' . ENTER .
                            '       codigo,' . ENTER .
                            '       nome,' . ENTER .
                            '       (select sigla' . ENTER .
                            '          from estados' . ENTER .
                            '         where estados.id = cidades.estado) as estado' . ENTER .
-                           'FROM cidades');
+                           '  from cidades' . ENTER .
+                           ' order by id');
     $stmt->execute();
 
     //while($row = $stmt->fetch()) {
@@ -23,7 +24,6 @@ try {
             <td>Código</td>
             <td>Nome</td>
             <td>Estado</td>
-            <td>Ação</td>
         </tr>
         <?php
         if (count($result)) {
@@ -34,10 +34,6 @@ try {
                     <td><?= $row['codigo'] ?></td>
                     <td><?= $row['nome'] ?></td>
                     <td><?= $row['estado'] ?></td>
-                    <td>
-                        <a href="?modulo=cidades&pagina=alterar&id=<?= $row['id'] ?>">Alterar</a>
-                        <a href="?modulo=cidades&pagina=deletar&id=<?= $row['id'] ?>">Excluír</a>
-                    </td>
                 </tr>
                 <?php
             }

@@ -1,8 +1,43 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+try {
+    $stmt = $conn->prepare('select id,' . ENTER .
+                           '       sigla,' . ENTER .
+                           '       nome' . ENTER .
+                           '  from estados' . ENTER .
+                           ' order by id');
+    $stmt->execute();
 
+    //while($row = $stmt->fetch()) {
+    //while($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+    //print_r($row);
+    //}
+
+    $result = $stmt->fetchAll();
+    ?>
+    <table border="1" class="table table-striped">
+        <tr>
+            <td>ID</td>
+            <td>Sigla</td>
+            <td>Nome</td>
+        </tr>
+        <?php
+        if (count($result)) {
+            foreach ($result as $row) {
+                ?>
+                <tr>
+                    <td><?= $row['id'] ?></td>
+                    <td><?= $row['sigla'] ?></td>
+                    <td><?= $row['nome'] ?></td>
+                </tr>
+                <?php
+            }
+        } else {
+            echo "Nenhum resultado retornado.";
+        }
+        ?>
+    </table>
+    <?php
+} catch (PDOException $e) {
+    echo 'ERROR: ' . $e->getMessage();
+}

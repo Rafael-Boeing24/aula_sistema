@@ -2,7 +2,7 @@
 $id = filter_input(INPUT_GET, 'id');
 
 try {
-    if ($id !== false) {
+    if (isset($id) & $id !== false) {
         $stmt = $conn->prepare('SELECT * FROM pessoas WHERE id = :id');
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     } else {
