@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 include "bibliotecas/parametros.php";
 include "bibliotecas/conexao.php";
 
