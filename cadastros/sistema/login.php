@@ -1,20 +1,32 @@
 <?php
 if (filter_input(INPUT_POST, 'login')) {
     try {
-        $stmt = $conn->prepare('select login,' . ENTER .
-                               '       nome' . ENTER .
+        $stmt = $conn->prepare('select *' . ENTER .
                                '  from usuarios' .
                                ' where email = :email' . ENTER .
                                '   and password = :senha');
         if ($stmt->execute(array('email' => filter_input(INPUT_POST, 'email'), 'senha' => md5(filter_input(INPUT_POST, 'senha'))))) {
-            $oRes = $stmt->fetchObject();
-            include CADASTROS . 'produtos/listagem.php';
+            if ($oRes = $stmt->fetchObject()) {
+                $_SESSION['id']      = $oRes->id;
+                $_SESSION['usuario'] = $oRes->login;
+                $_SESSION['email']   = $oRes->email;
+                $_SESSION['nome']    = $oRes->nome;
+
+                include LAYOUTS . 'header.php';
+                include LAYOUTS . 'menu.php';
+                include LAYOUTS . 'home.php';
+                include LAYOUTS . 'footer.php';
+
+
+                exit();
+            }
         } else {
-            include CADASTROS . 'sistema/login.php';
+            include SISTEMA . 'login.php';
         }
     } catch (PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();
     }
+
 }
 ?>
 <form method="post">
@@ -25,5 +37,5 @@ if (filter_input(INPUT_POST, 'login')) {
         <input type="password" class="form-control" name="senha" id="senha" required>
     </div>
     <input type="submit" class="btn btn-success" name="login" value="Login">
-    <a href="<?=ROOT_DIR?>registrar.php" class="btn btn-primary">Registrar</a>
+    <a href="cadastros/sistema/registrar.php" class="btn btn-primary">Registrar</a>
 </form>

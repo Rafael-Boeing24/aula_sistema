@@ -14,11 +14,6 @@ try {
                            'from produtos');
     $stmt->execute();
 
-    //while($row = $stmt->fetch()) {
-    //while($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-    //print_r($row);
-    //}
-
     $result = $stmt->fetchAll();
     ?>
     <table border="1" class="table table-striped">

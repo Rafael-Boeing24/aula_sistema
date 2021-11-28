@@ -14,11 +14,6 @@ if (!isset($_SESSION['usuario'])) {
 
 include LAYOUTS . 'menu.php';
 
-if (!isset($_SESSION['login'])) {
-    include CADASTROS . 'sistema/login.php';
-    exit();
-}
-
 if (!filter_input(INPUT_GET, 'pagina')) {
     include LAYOUTS . 'home.php';
 } else {

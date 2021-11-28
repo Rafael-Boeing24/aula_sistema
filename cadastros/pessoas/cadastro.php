@@ -10,6 +10,7 @@ if (filter_input(INPUT_POST, 'gravar')) {
                 'INSERT INTO pessoas (nome) values (:nome)');
         if ($stmt->execute(array('nome' => filter_input(INPUT_POST, 'nome')))) {
             include CADASTROS . 'pessoas/listagem.php';
+            exit();
         }
     } catch (PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();
