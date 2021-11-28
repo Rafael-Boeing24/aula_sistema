@@ -1,9 +1,15 @@
 <?php
+session_start();
 
 include "bibliotecas/parametros.php";
 include "bibliotecas/conexao.php";
 
 include LAYOUTS . 'header.php';
+
+if (!isset($_SESSION['usuario'])) {
+    include SISTEMA . 'login.php';
+    exit();
+}
 
 include LAYOUTS . 'menu.php';
 

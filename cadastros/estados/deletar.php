@@ -1,4 +1,9 @@
 <?php
+if (!isset($_SESSION['usuario'])) {
+    include SISTEMA . 'login.php';
+    exit();
+}
+
 if (filter_input(INPUT_POST, 'deletar')) {
     try {
         $stmt = $conn->prepare('delete from estados where id = :id');

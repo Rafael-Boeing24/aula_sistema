@@ -1,4 +1,9 @@
 <?php
+if (!isset($_SESSION['usuario'])) {
+    include SISTEMA . 'login.php';
+    exit();
+}
+
 if (filter_input(INPUT_POST, 'gravar')) {
     try {
         $stmt = $conn->prepare('INSERT INTO cidades (codigo, nome, estado) values (:codigo, :nome, :estado)');

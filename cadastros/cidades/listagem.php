@@ -1,4 +1,8 @@
 <?php
+if (!isset($_SESSION['usuario'])) {
+    include SISTEMA . 'login.php';
+    exit();
+}
 
 try {
     $stmt = $conn->prepare('select id,' . ENTER .
@@ -10,11 +14,6 @@ try {
                            '  from cidades' . ENTER .
                            ' order by id');
     $stmt->execute();
-
-    //while($row = $stmt->fetch()) {
-    //while($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-    //print_r($row);
-    //}
 
     $result = $stmt->fetchAll();
     ?>

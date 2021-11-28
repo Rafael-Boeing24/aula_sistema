@@ -1,4 +1,9 @@
 <?php
+if (!isset($_SESSION['usuario'])) {
+    include SISTEMA . 'login.php';
+    exit();
+}
+
 if (filter_input(INPUT_POST, 'gravar')) {
     try {
         $stmt = $conn->prepare('insert into estados (nome, sigla) values (:nome, :sigla)');

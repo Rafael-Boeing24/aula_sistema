@@ -1,4 +1,9 @@
 <?php
+if (!isset($_SESSION['usuario'])) {
+    include SISTEMA . 'login.php';
+    exit();
+}
+
 if (filter_input(INPUT_POST, 'alterar')) {
     try {
         $stmt = $conn->prepare('update cidades set codigo = :codigo, nome = :nome, estado = :estado where id = :id');
@@ -41,6 +46,5 @@ $oRes = $stmt->fetchObject();
             ?>
         </select>
     </div>
-
     <input type="submit" name="alterar" value="Salvar">
 </form>

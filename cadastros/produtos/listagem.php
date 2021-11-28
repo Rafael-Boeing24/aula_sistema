@@ -1,4 +1,8 @@
 <?php
+if (!isset($_SESSION['usuario'])) {
+    include SISTEMA . 'login.php';
+    exit();
+}
 
 try {
     $stmt = $conn->prepare('select id,' . ENTER .

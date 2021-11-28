@@ -1,4 +1,9 @@
 <?php
+if (!isset($_SESSION['usuario'])) {
+    include SISTEMA . 'login.php';
+    exit();
+}
+
 if (filter_input(INPUT_POST, 'alterar')) {
     try {
         $stmt = $conn->prepare('update estados set nome = :nome, sigla = :sigla where id = :id');

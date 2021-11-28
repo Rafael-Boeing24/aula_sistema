@@ -1,4 +1,9 @@
 <?php
+if (!isset($_SESSION['usuario'])) {
+    include SISTEMA . 'login.php';
+    exit();
+}
+
 if (isset($_POST['deletar'])) {
     try {
         $stmt = $conn->prepare(
