@@ -6,11 +6,8 @@ if (!isset($_SESSION['usuario'])) {
 
 if (isset($_POST['deletar'])) {
     try {
-        $stmt = $conn->prepare(
-                'DELETE FROM pessoas WHERE id = :id');
-        //$stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt = $conn->prepare('DELETE FROM pessoas WHERE id = :id');
         $stmt->execute(array('id' => $_GET['id']));
-        //$stmt->execute();
         ?>
         <div class="alert alert-success" role="alert">
             Sucesso! O registro foi deletado.
@@ -26,7 +23,6 @@ if (isset($_GET['id'])) {
     $stmt = $conn->prepare('SELECT * FROM pessoas WHERE id = :id');
     $stmt->bindParam(':id', $_GET['id'], PDO::PARAM_INT);
 }
-//$stmt->execute(array('id' => $id));
 $stmt->execute();
 $r = $stmt->fetchAll();
 ?>
