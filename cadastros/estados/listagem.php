@@ -55,14 +55,12 @@ try {
     if ($iNroPaginacao > 0) {
         $sPaginacao = '<ul class="pagination">' . ENTER;
         for ($i = 0; $i < $iNroPaginacao; $i++) {
-            $sPaginacao .= '<li class="page-item"><a class="page-link" href="?modulo=pessoas&pagina=listagem&paginacao=' . $i . '">' . ($i + 1) . '</a></li>' . ENTER;
+            $sPaginacao .= '<li class="page-item"><a class="page-link" href="?modulo=estados&pagina=listagem&paginacao=' . $i . '">' . ($i + 1) . '</a></li>' . ENTER;
         }
         $sPaginacao .= '</ul>';
 
         echo $sPaginacao;
     }
-    ?>
-    <?php
 } catch (PDOException $e) {
     echo 'ERROR: ' . $e->getMessage();
 }

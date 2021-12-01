@@ -61,8 +61,6 @@ try {
 
         echo $sPaginacao;
     }
-    ?>
-    <?php
 } catch (PDOException $e) {
     echo 'ERROR: ' . $e->getMessage();
 }

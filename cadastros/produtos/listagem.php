@@ -15,6 +15,7 @@ try {
     $stmt->execute();
 
     $result = $stmt->fetchAll();
+    $iNroPaginacao = ceil(count($result) / 10);
     ?>
     <table border="1" class="table table-striped">
         <tr>
@@ -27,17 +28,26 @@ try {
         </tr>
         <?php
         if (count($result)) {
-            foreach ($result as $row) {
-                ?>
-                <tr>
-                    <td><?= $row['id'] ?></td>
-                    <td><?= $row['marca'] ?></td>
-                    <td><?= $row['nome'] ?></td>
-                    <td><?= $row['quantidade'] ?></td>
-                    <td><?= $row['valorunitario'] ?></td>
-                    <td><?= $row['valortotal'] ?></td>
-                </tr>
-                <?php
+            if ($iPaginacao = filter_input(INPUT_GET, 'paginacao')) {
+                $iInicioRegistros = $iPaginacao * 10;
+                $iFinalRegistros = $iInicioRegistros + 9;
+            } else {
+                $iInicioRegistros = 0;
+                $iFinalRegistros  = 9;
+            }
+            foreach ($result as $iIndice => $row) {
+                if ($iIndice >= $iInicioRegistros && $iIndice <= $iFinalRegistros) {
+                    ?>
+                    <tr>
+                        <td><?= $row['id'] ?></td>
+                        <td><?= $row['marca'] ?></td>
+                        <td><?= $row['nome'] ?></td>
+                        <td><?= $row['quantidade'] ?></td>
+                        <td><?= $row['valorunitario'] ?></td>
+                        <td><?= $row['valortotal'] ?></td>
+                    </tr>
+                    <?php
+                }
             }
         } else {
             echo "Nenhum resultado retornado.";
@@ -45,6 +55,15 @@ try {
         ?>
     </table>
     <?php
+    if ($iNroPaginacao > 0) {
+        $sPaginacao = '<ul class="pagination">' . ENTER;
+        for ($i = 0; $i < $iNroPaginacao; $i++) {
+            $sPaginacao .= '<li class="page-item"><a class="page-link" href="?paginacao=' . $i . '">' . ($i + 1) . '</a></li>' . ENTER;
+        }
+        $sPaginacao .= '</ul>';
+
+        echo $sPaginacao;
+    }
 } catch (PDOException $e) {
     echo 'ERROR: ' . $e->getMessage();
 }
